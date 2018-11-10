@@ -1,0 +1,39 @@
+
+language: julia
+os:
+  - linux
+julia:
+  - 1.0
+notifications:
+  email: false
+git:
+  depth: 99999999
+cache:
+  timeout: 1000
+  directories:
+    - downloads
+env:
+  global:
+    - BINARYBUILDER_DOWNLOADS_CACHE=downloads
+    - BINARYBUILDER_AUTOMATIC_APPLE=true
+sudo: required
+
+before_script:
+  - julia -e 'import Pkg; Pkg.add.(["BinaryBuilder", "BinaryProvider"]); Pkg.build()'
+
+script:
+  - julia build_tarballs.jl
+
+
+deploy:
+    provider: releases
+    api_key:
+        # Note; this api_key is only valid for MaximeBouton/SpotBuilder; you need
+        # to make your own: https://docs.travis-ci.com/user/deployment/releases/
+        secure: O7pp8JE5vz7UJHdsozIxbsvGtzttH6b6xjiyuDzU/Pk9KpHlNBfpRDyVpu8PAReeAxA5vaNMuYzmOZv4NJGw4cUDpGj61gIHy97tSCaXwxSE1FraTKLI3ez1SfumTBh3mYQHWglZYfg6dlGYBzKXRb1vnII/vFdu1PUmHJy8xNdxVVNjtQdMRxwsgFTdcYRmlKmYoaaMzGKeRCvuaAKoES4wtwNSpmMbYROUF//RBLlP1spLbuaeZ2+5OD7TfH+nX/k1wGgz9emJFp2g84Z2bE3KaiUPQzte8tifMSZ/L/gehkg05zGdgC3ryfe2UR5ooU69c3UvOB9wUpeqyNJWVem7xzY1dsfuBWoT2SsVw8vq4NWzJRtc10y7Vd9UKDIalNKwNzMaDQDiprEhWDw6lRaYpw2zv3xgykqJ/6+12qN55JeuQZ/tIZlawBwBq40oFSnVnjkqo0QwqhKBphDv3+9ybMBf4McFJE3xE3uq+10WoOhJgrwtbn0f020pqkpn8ibV1eMAJrvykXMxgY5hcDzH79Sbat8XCxG5he9xw3ol+ckIkpGQInuOKqeBMj+KwigOAKcGoAnmpb42LmA+u3qiSr2NitUElzuVcGhVkZDkjVWm4PddUGNkrvc8YNa1bdMo94Ly1Ty64jdrOKVSSfQa+tRkJccFvichEEwE/xU=
+    file_glob: true
+    file: products/*
+    skip_cleanup: true
+    on:
+        repo: MaximeBouton/SpotBuilder
+        tags: true
