@@ -1,4 +1,6 @@
-# SpotBuilder builder
+# SpotBuilder
+
+[![Build Status](https://travis-ci.org/MaximeBouton/SpotBuilder.svg?branch=master)](https://travis-ci.org/MaximeBouton/SpotBuilder)
 
 This repository builds binary artifacts for the SpotBuilder project.
 This repository has a default .travis.yml file that can be used to build
