@@ -2,14 +2,13 @@
 # `julia build_tarballs.jl --help` to see a usage message.
 using BinaryBuilder
 
-name = "SpotBuilder"
-version = v"0.0.0"
+name = "Spot"
+version = v"2.6.3"
 
 # Collection of sources required to build SpotBuilder
 sources = [
-    "https://gitlab.lrde.epita.fr/spot/spot/-/jobs/21303/artifacts/download" =>
-    "5f60a22b5d92eaaa032698a8697fac9e95e9c2649f0604d381ccceebfa65c8c2",
-
+    "https://gitlab.lrde.epita.fr/spot/spot/-/jobs/21743/artifacts/download" =>
+    "c9ec44d4379522a83740f5aaae34bc48a9e7c88abef6d37b168bd135fc43dcea",
 ]
 
 # Bash recipe for building across all platforms
