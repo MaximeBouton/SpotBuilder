@@ -3,22 +3,19 @@
 using BinaryBuilder
 
 name = "Spot"
-version = v"2.6.3"
+version = v"2.7.5"
 
 # Collection of sources required to build SpotBuilder
 sources = [
-    "https://gitlab.lrde.epita.fr/spot/spot/-/jobs/21743/artifacts/download" =>
-    "c9ec44d4379522a83740f5aaae34bc48a9e7c88abef6d37b168bd135fc43dcea",
+    "http://www.lrde.epita.fr/dload/spot/spot-2.7.5.tar.gz" =>
+    "2cbbfb6245250603c92fd3d512d07b5d70c7924826b156a260c4a41039c0ce23",
 ]
 
 # Bash recipe for building across all platforms
 script = raw"""
-apk add python3-dev
 cd $WORKSPACE/srcdir
-unzip download 
-tar -xzf spot-2.6.3.dev.tar.gz
-cd spot-2.6.3.dev 
-./configure --prefix=$prefix --host=${target}
+cd spot-2.7.5
+./configure --prefix=$prefix --host=${target} --disable-python
 sed -i 's/<cstdlib>/<stdlib.h>/' spot/misc/tmpfile.cc
 make -j${nproc}
 make install
@@ -27,7 +24,9 @@ make install
 # These are the platforms we will build for by default, unless further
 # platforms are passed in on the command line
 platforms = [
-    Linux(:x86_64, compiler_abi=CompilerABI(:gcc7))
+    Windows(:x86_64, compiler_abi=CompilerABI(:gcc7)),
+    Linux(:x86_64, compiler_abi=CompilerABI(:gcc7)),
+    MacOS(:x86_64, compiler_abi=CompilerABI(:gcc7))
 ]
 
 # The products that we will ensure are always built
@@ -37,9 +36,8 @@ products(prefix) = [
 
 # Dependencies that must be installed before this package can be built
 dependencies = [
-    
+
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
 build_tarballs(ARGS, name, version, sources, script, platforms, products, dependencies)
-
