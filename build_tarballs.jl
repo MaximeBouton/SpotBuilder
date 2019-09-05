@@ -3,18 +3,18 @@
 using BinaryBuilder
 
 name = "Spot"
-version = v"2.7.5"
+version = v"2.8.1"
 
 # Collection of sources required to build SpotBuilder
 sources = [
-    "http://www.lrde.epita.fr/dload/spot/spot-2.7.5.tar.gz" =>
-    "2cbbfb6245250603c92fd3d512d07b5d70c7924826b156a260c4a41039c0ce23",
+    "http://www.lrde.epita.fr/dload/spot/spot-2.8.1.tar.gz" =>
+    "dcb7aa684725304afb3d435f26f25b51fbd6e9a6ef610e16163cc0030ad5eab4"    
 ]
 
 # Bash recipe for building across all platforms
 script = raw"""
 cd $WORKSPACE/srcdir
-cd spot-2.7.5
+cd spot-2.8.1
 
 if [[ "${target}" == *-freebsd* ]] || [[ "${target}" == *-apple-* ]]; then
     export CC=/opt/${target}/bin/${target}-gcc
@@ -28,7 +28,6 @@ if [[ "${target}" == *-freebsd* ]] || [[ "${target}" == *-apple-* ]]; then
 fi
 
 ./configure --prefix=$prefix --host=${target} --disable-python
-sed -i 's/<cstdlib>/<stdlib.h>/' spot/misc/tmpfile.cc
 make -j${nproc}
 make install
 """
