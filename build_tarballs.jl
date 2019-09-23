@@ -17,6 +17,8 @@ cd $WORKSPACE/srcdir
 cd spot-2.8.1
 
 if [[ "${target}" == *-freebsd* ]] || [[ "${target}" == *-apple-* ]]; then
+    export CC=/opt/${target}/bin/${target}-gcc
+    export CXX=/opt/${target}/bin/${target}-g++
     export FC=/opt/${target}/bin/${target}-gfortran
     export LD=/opt/${target}/bin/${target}-ld
     export AR=/opt/${target}/bin/${target}-ar
@@ -37,7 +39,8 @@ platforms = [
     Windows(:x86_64, compiler_abi=CompilerABI(:gcc8)),
     Linux(:x86_64, compiler_abi=CompilerABI(:gcc7)),
     Linux(:x86_64, compiler_abi=CompilerABI(:gcc8)),
-    MacOS(:x86_64)
+    MacOS(:x86_64, compiler_abi=CompilerABI(:gcc7)),
+    MacOS(:x86_64, compiler_abi=CompilerABI(:gcc8))
 ]
 
 # The products that we will ensure are always built
